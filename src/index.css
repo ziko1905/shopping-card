@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap");
+
+.suse-default {
+  font-family: "SUSE", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+:root {
+  font-family: "SUSE", "Courier New", Courier, monospace;
+}
