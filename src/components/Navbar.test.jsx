@@ -22,9 +22,24 @@ describe("Nav general", () => {
 })
 
 describe("Shopping cart button", () => {
-    it("render number of products icon", () => {
+    it("not render number of products icon", () => {
         render(<MemoryRouter><Navbar /></MemoryRouter>)
 
-        expect(() => screen.getByAltText("Number of items in cart")).not.toThrow()
+        expect(() => screen.getByLabelText("Number of items in cart")).toThrow()
+    })
+    it("display update in number of products in cart", () => {
+        render(<MemoryRouter><Navbar itemsNum={2}/></MemoryRouter>)
+
+        expect(screen.getByLabelText("Number of items in cart").textContent).toBe("2")
+    })
+    it("display '9' if number of products is 9", () => {
+        render(<MemoryRouter><Navbar itemsNum={9}/></MemoryRouter>)
+
+        expect(screen.getByLabelText("Number of items in cart").textContent).toBe("9")
+    })
+    it("display '+9' if number of products > 9", () => {
+        render(<MemoryRouter><Navbar itemsNum={10}/></MemoryRouter>)
+
+        expect(screen.getByLabelText("Number of items in cart").textContent).toBe("+9")
     })
 })
