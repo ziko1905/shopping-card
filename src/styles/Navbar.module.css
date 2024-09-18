@@ -48,3 +48,7 @@
   font-weight: 600;
   transform: translate(10%, -15%);
 }
+
+.product-num span.product-overflow {
+  transform: translate(-25%, -15%);
+}

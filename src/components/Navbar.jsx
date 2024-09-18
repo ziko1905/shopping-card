@@ -16,11 +16,9 @@ function ShoppingCartIcon({itemsNum=0}) {
         <Link to="/shopping-cart" className={styles["cart-div"]}>
             <img className={styles.cart} src={cartSrc} alt="Shopping cart displaying amount of items in cart" />
             {!!itemsNum && <div className={styles["product-num"]} aria-label="Number of items in cart">
-                <span>
-                    {itemsNum < 10 
-                    ? itemsNum
-                    : "+9"}
-                </span>
+                {itemsNum < 10 
+                ? <span>{itemsNum}</span>
+                : <span className={styles["product-overflow"]}>{"+9"}</span>}
             </div>}
         </Link>
     )

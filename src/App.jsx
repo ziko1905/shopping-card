@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <Navbar />
+      <Navbar itemsNum={"10"}/>
       <h1>Awesome store</h1>
       <Outlet />
     </>
