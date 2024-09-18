@@ -1,13 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { screen, render } from '@testing-library/react';
 import App from '../App';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('App general', () => {
   it('renders headline', () => {
-    render(<App title="React" />);
+    render(<MemoryRouter><App title="React" /></MemoryRouter>);
 
-    screen.debug();
-
-    // check if App components renders headline
+    expect(screen.getByRole('heading').textContent).toMatch("Awesome store")
   });
 });
