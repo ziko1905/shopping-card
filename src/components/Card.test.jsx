@@ -32,6 +32,12 @@ describe("Card general", () => {
 
         expect(() => screen.getByLabelText("Input for changing amount with current amount")).not.toThrow()
     })
+    it("card renders additional buttons", () => {
+        render(<Card addOnBtns={[{ text: "Additional button"}]} />)
+
+        expect(() => screen.getByText("Additional button")).not.toThrow()
+        screen.debug()
+    })
 })
 
 describe("Buttons logic", () => {
@@ -101,3 +107,19 @@ describe("Input logic", () => {
     })
 })
 
+describe("Additional buttons props", () => {
+    it("Class prop passed", () => {
+        render(<Card addOnBtns={[{ text: "Add btn 1", className: "add-btn-1" }, { text: "Add btn 2", className: "add-btn-2" }]}/>)
+
+        expect(screen.getByText("Add btn 1").className).toBe("add-btn-1")
+        expect(screen.getByText("Add btn 2").className).toBe("add-btn-2")
+    })
+    it("Multiple props passed", () => {
+        render(<Card addOnBtns={[{ text: "Add btn 1", className: "add-btn-1", id: "add-1" }, { text: "Add btn 2", className: "add-btn-2", id: "add-2" }]}/>)
+
+        expect(screen.getByText("Add btn 1").className).toBe("add-btn-1")
+        expect(screen.getByText("Add btn 1").id).toBe("add-1")
+        expect(screen.getByText("Add btn 2").className).toBe("add-btn-2")
+        expect(screen.getByText("Add btn 2").id).toBe("add-2")
+    })
+})
