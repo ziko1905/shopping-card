@@ -3,31 +3,31 @@ import userEvent from "@testing-library/user-event";
 import { screen, render } from "@testing-library/react";
 import Card from "./Card.jsx"
 
-describe("Cart general", () => {
-    it("cart renders", () => {
+describe("Card general", () => {
+    it("card renders", () => {
         render(<Card />)
 
         expect(() => screen.getByTestId("product-card")).not.toThrow()
     })
-    it("cart renders title", () => {
+    it("card renders title", () => {
         render(<Card title="Test title" />)
 
         expect(() => screen.getByText("Test title")).not.toThrow()
     })
-    it("cart renders image", () => {
+    it("card renders image", () => {
         render(<Card title="Test title" src="../assets/cart-outline.svg" />)
 
         expect(() => screen.getByAltText("Image of Test title")).not.toThrow()
         expect(() => screen.getByRole("img")).not.toThrow()
         expect(screen.getByAltText("Image of Test title").src).toBe("http://localhost:3000/assets/cart-outline.svg")
     })
-    it("cart renders buttons", () => {
-        render(<Card title="Test title" src="../assets/cart-outline.svg" />)
+    it("card renders buttons", () => {
+        render(<Card title="Test title" src="../assets/card-outline.svg" />)
 
         expect(() => screen.getByText("+")).not.toThrow()
         expect(() => screen.getByText("-")).not.toThrow()
     })
-    it("cart renders input", () => {
+    it("card renders input", () => {
         render(<Card />)
 
         expect(() => screen.getByLabelText("Input for changing amount with current amount")).not.toThrow()
