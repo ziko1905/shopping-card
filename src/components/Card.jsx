@@ -1,10 +1,9 @@
 function Card({title, src, amountCallback, amount=0, addOnBtns=[]}) {
-    const buttons = [{ text: "+"}, { text: "-"}];
+    const buttons = [
+        { text: "+", "aria-label": "Increment amount by one", onClick: () => amountCallback(amount + 1)},
+        { text: "-", "aria-label": "Decrement amount by one", onClick: () => amountCallback(amount - 1)}
+    ];
     addOnBtns.forEach(btn => buttons.push(btn))
-    if (amountCallback) {
-        buttons[0].onClick = () => amountCallback(amount + 1)
-        buttons[1].onClick = () => amountCallback(amount - 1)
-    }
 
     return (<div data-testid="product-card">
                 <h3>{title}</h3>
@@ -14,7 +13,7 @@ function Card({title, src, amountCallback, amount=0, addOnBtns=[]}) {
                     delete props.text
                     return <button {...props} key={i}>{btn.text}</button>
                 })}
-                <input onChange={(e) => amountCallback(+e.target.value)} value={amount} aria-label="Input for changing amount with current amount" type="text" />
+                <input onChange={(e) => amountCallback(e.target.value)} value={amount} aria-label="Input for changing amount with current amount" type="text" />
             </div>)
 }
 

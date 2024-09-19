@@ -27,6 +27,12 @@ describe("Card general", () => {
         expect(() => screen.getByText("+")).not.toThrow()
         expect(() => screen.getByText("-")).not.toThrow()
     })
+    it("card render buttons aria-labels", () => {
+        render(<Card />)
+
+        expect(() => screen.getByLabelText("Increment amount by one")).not.toThrow()
+        expect(() => screen.getByLabelText("Decrement amount by one")).not.toThrow()
+    })
     it("card renders input", () => {
         render(<Card />)
 
@@ -99,11 +105,16 @@ describe("Input logic", () => {
         await user.click(screen.getByLabelText("Input for changing amount with current amount"))
         await user.keyboard("5")
 
-        expect(inpCallback.mock.calls[0][0]).toBe(5)
+        expect(inpCallback.mock.calls[0][0]).toBe("05")
         expect(screen.getByLabelText("Input for changing amount with current amount")).toHaveFocus()
         rerender(<Card amount={amount} amountCallback={inpCallback} />)
         await user.keyboard("5")
-        expect(inpCallback.mock.calls[1][0]).toBe(55)
+        expect(inpCallback.mock.calls[1][0]).toBe("055")
+
+        await user.keyboard(".")
+        rerender(<Card amount={amount} amountCallback={inpCallback} />)
+        await user.keyboard("5")
+        expect(inpCallback.mock.calls[3][0]).toBe("05.5")
     })
 })
 
