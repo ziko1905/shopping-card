@@ -1,4 +1,6 @@
-function Card({title, src, amountCallback, amount=0, addOnBtns=[]}) {
+function Card({productObj, amountCallback, amount=0, addOnBtns=[]}) {
+    const title = productObj.title
+    const src = productObj.image
     const buttons = [
         { text: "+", "aria-label": "Increment amount by one", onClick: () => amountCallback(amount + 1)},
         { text: "-", "aria-label": "Decrement amount by one", onClick: () => amountCallback(amount - 1)}
