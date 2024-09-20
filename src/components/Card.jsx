@@ -9,7 +9,7 @@ function Card({productObj, amountCallback, amount=0, addOnBtns=[]}) {
 
     return (<div data-testid="product-card">
                 <h3>{title}</h3>
-                <img alt={`Image of ${title}`} src={src}></img>
+                <img alt={"Image of the item"} src={src}></img>
                 {buttons.map((btn, i) => {
                     const props = {...btn}
                     delete props.text

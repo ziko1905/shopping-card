@@ -3,43 +3,45 @@ import userEvent from "@testing-library/user-event";
 import { screen, render } from "@testing-library/react";
 import Card from "./Card.jsx"
 
+const testProduct = await fetch('https://fakestoreapi.com/products/1').then(response => response.json()).then()
+
 describe("Card general", () => {
     it("card renders", () => {
-        render(<Card />)
+        render(<Card productObj={testProduct}/>)
 
         expect(() => screen.getByTestId("product-card")).not.toThrow()
     })
-    it("card renders title", () => {
-        render(<Card title="Test title" />)
+    it("card renders title from products API", () => {
+        render(<Card productObj={testProduct} />)
 
-        expect(() => screen.getByText("Test title")).not.toThrow()
+        expect(() => screen.getByText(testProduct.title)).not.toThrow()
     })
     it("card renders image", () => {
-        render(<Card title="Test title" src="../assets/cart-outline.svg" />)
+        render(<Card productObj={testProduct} />)
 
-        expect(() => screen.getByAltText("Image of Test title")).not.toThrow()
+        expect(() => screen.getByAltText("Image of the item")).not.toThrow()
         expect(() => screen.getByRole("img")).not.toThrow()
-        expect(screen.getByAltText("Image of Test title").src).toBe("http://localhost:3000/assets/cart-outline.svg")
+        expect(screen.getByAltText("Image of the item").src).toBe(testProduct.image)
     })
     it("card renders buttons", () => {
-        render(<Card title="Test title" src="../assets/card-outline.svg" />)
+        render(<Card productObj={testProduct} />)
 
         expect(() => screen.getByText("+")).not.toThrow()
         expect(() => screen.getByText("-")).not.toThrow()
     })
     it("card render buttons aria-labels", () => {
-        render(<Card />)
+        render(<Card productObj={testProduct} />)
 
         expect(() => screen.getByLabelText("Increment amount by one")).not.toThrow()
         expect(() => screen.getByLabelText("Decrement amount by one")).not.toThrow()
     })
     it("card renders input", () => {
-        render(<Card />)
+        render(<Card productObj={testProduct} />)
 
         expect(() => screen.getByLabelText("Input for changing amount with current amount")).not.toThrow()
     })
     it("card renders additional buttons", () => {
-        render(<Card addOnBtns={[{ text: "Additional button"}]} />)
+        render(<Card productObj={testProduct} addOnBtns={[{ text: "Additional button"}]} />)
 
         expect(() => screen.getByText("Additional button")).not.toThrow()
         screen.debug()
@@ -50,7 +52,7 @@ describe("Buttons logic", () => {
     it("Increment btn increases amount", async () => {
         const user = userEvent.setup()
         const incCallback = vi.fn()
-        render(<Card amountCallback={incCallback}/>)
+        render(<Card productObj={testProduct} amountCallback={incCallback}/>)
 
         await user.click(screen.getByText("+"))
 
@@ -59,7 +61,7 @@ describe("Buttons logic", () => {
     it("Increment btn increases amount(custom amount)", async () => {
         const user = userEvent.setup()
         const incCallback = vi.fn()
-        render(<Card amount={10} amountCallback={incCallback}/>)
+        render(<Card productObj={testProduct} amount={10} amountCallback={incCallback}/>)
 
         await user.click(screen.getByText("+"))
 
@@ -68,7 +70,7 @@ describe("Buttons logic", () => {
     it("Decrement btn decreases amount", async () => {
         const user = userEvent.setup()
         const incCallback = vi.fn()
-        render(<Card amountCallback={incCallback}/>)
+        render(<Card productObj={testProduct} amountCallback={incCallback}/>)
 
         await user.click(screen.getByText("-"))
 
@@ -77,7 +79,7 @@ describe("Buttons logic", () => {
     it("Decrement btn decreases amount(custom amount)", async () => {
         const user = userEvent.setup()
         const decCallback = vi.fn()
-        render(<Card amount={10} amountCallback={decCallback}/>)
+        render(<Card productObj={testProduct} amount={10} amountCallback={decCallback}/>)
 
         await user.click(screen.getByText("-"))
 
@@ -87,12 +89,12 @@ describe("Buttons logic", () => {
 
 describe("Input logic", () => {
     it("Input having default value of 0", () => {
-        render(<Card />)
+        render(<Card productObj={testProduct}/>)
 
         expect(screen.getByLabelText("Input for changing amount with current amount").value).toBe("0")
     })
     it("Input having value of amount prop", () => {
-        render(<Card amount={10} />)
+        render(<Card productObj={testProduct} amount={10} />)
 
         expect(screen.getByLabelText("Input for changing amount with current amount").value).toBe("10")
     })
@@ -100,19 +102,19 @@ describe("Input logic", () => {
         let amount = 0;
         const user = userEvent.setup()
         const inpCallback = vi.fn((newA) => amount = newA)
-        const {rerender} = render(<Card amountCallback={inpCallback} />)
+        const {rerender} = render(<Card productObj={testProduct} amountCallback={inpCallback} />)
 
         await user.click(screen.getByLabelText("Input for changing amount with current amount"))
         await user.keyboard("5")
 
         expect(inpCallback.mock.calls[0][0]).toBe("05")
         expect(screen.getByLabelText("Input for changing amount with current amount")).toHaveFocus()
-        rerender(<Card amount={amount} amountCallback={inpCallback} />)
+        rerender(<Card productObj={testProduct} amount={amount} amountCallback={inpCallback} />)
         await user.keyboard("5")
         expect(inpCallback.mock.calls[1][0]).toBe("055")
 
         await user.keyboard(".")
-        rerender(<Card amount={amount} amountCallback={inpCallback} />)
+        rerender(<Card productObj={testProduct} amount={amount} amountCallback={inpCallback} />)
         await user.keyboard("5")
         expect(inpCallback.mock.calls[3][0]).toBe("05.5")
     })
@@ -120,13 +122,13 @@ describe("Input logic", () => {
 
 describe("Additional buttons props", () => {
     it("Class prop passed", () => {
-        render(<Card addOnBtns={[{ text: "Add btn 1", className: "add-btn-1" }, { text: "Add btn 2", className: "add-btn-2" }]}/>)
+        render(<Card productObj={testProduct} addOnBtns={[{ text: "Add btn 1", className: "add-btn-1" }, { text: "Add btn 2", className: "add-btn-2" }]}/>)
 
         expect(screen.getByText("Add btn 1").className).toBe("add-btn-1")
         expect(screen.getByText("Add btn 2").className).toBe("add-btn-2")
     })
     it("Multiple props passed", () => {
-        render(<Card addOnBtns={[{ text: "Add btn 1", className: "add-btn-1", id: "add-1" }, { text: "Add btn 2", className: "add-btn-2", id: "add-2" }]}/>)
+        render(<Card productObj={testProduct} addOnBtns={[{ text: "Add btn 1", className: "add-btn-1", id: "add-1" }, { text: "Add btn 2", className: "add-btn-2", id: "add-2" }]}/>)
 
         expect(screen.getByText("Add btn 1").className).toBe("add-btn-1")
         expect(screen.getByText("Add btn 1").id).toBe("add-1")

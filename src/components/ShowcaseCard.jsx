@@ -1,9 +1,9 @@
 import { useState } from "react"
 import Card from "./Card.jsx"
 
-function ShowcaseCard(props) {
+function ShowcaseCard({productObj, orderCallback, order}) {
     const [amount, setAmount] = useState(1)
-    const addToCartBtn = { text: "Add To Cart", onClick: () => handleOrderUpdate({ productId: props.productId, amount: amount}) }
+    const addToCartBtn = { text: "Add To Cart", onClick: () => handleOrderUpdate({ productObj, productId: productObj.id, amount: amount}) }
 
     function handleAmountChange(newAmount) {
         if (newAmount < 1 || isNaN(+newAmount)) return
@@ -11,18 +11,18 @@ function ShowcaseCard(props) {
     }    
 
     function handleOrderUpdate(obj) {
-        const oldOrderElem = props.order.filter(order => order.productId === obj.productId)[0]
+        const oldOrderElem = order.filter(order => order.productId === obj.productId)[0]
         if (oldOrderElem) {
             oldOrderElem.amount += obj.amount
-            props.orderCallback(props.order)
+            orderCallback(order)
         }
         else {
-            props.orderCallback([...props.order, obj])
+            orderCallback([...order, obj])
         } 
     }
 
     return (
-        <Card {...props} amountCallback={handleAmountChange} amount={amount} addOnBtns={[addToCartBtn]}/>
+        <Card productObj={productObj} amountCallback={handleAmountChange} amount={amount} addOnBtns={[addToCartBtn]}/>
     )
 }
 
