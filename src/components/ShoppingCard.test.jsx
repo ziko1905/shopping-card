@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, test } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { screen, render } from "@testing-library/react";
 import ShoppingCard from "./ShoppingCard";
