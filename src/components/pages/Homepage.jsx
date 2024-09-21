@@ -1,4 +1,4 @@
-import categoryFilter from "./helper-functions/categoryFilter"
+import categoryFilter from "../helper-functions/categoryFilter"
 import ShowcaseCard from "../ShowcaseCard"
 
 function Homepage({productList=[], order, orderCallback}) {
