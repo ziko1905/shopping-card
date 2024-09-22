@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { screen, render } from "@testing-library/react";
 import Card from "./Card.jsx"
+import prettyPrice from "./helper-functions/prettyPrice.js";
 
 const testProduct = await fetch('https://fakestoreapi.com/products/1').then(response => response.json()).then()
 
@@ -9,7 +10,7 @@ describe("Card general", () => {
     it("card renders", () => {
         render(<Card productObj={testProduct}/>)
 
-        expect(() => screen.getByTestId("product-card")).not.toThrow()
+        expect(() => screen.getByRole("heading", {name: testProduct.title})).not.toThrow()
     })
     it("card renders title from products API", () => {
         render(<Card productObj={testProduct} />)
@@ -39,6 +40,11 @@ describe("Card general", () => {
         render(<Card productObj={testProduct} />)
 
         expect(() => screen.getByLabelText("Input for changing amount with current amount")).not.toThrow()
+    })
+    it("card renders price correctly", () => {
+        render(<Card productObj={testProduct} />)
+
+        expect(screen.getByLabelText("Item price").textContent).toBe(`Price: ${prettyPrice(testProduct.price)}$`)
     })
     it("card renders additional buttons", () => {
         render(<Card productObj={testProduct} addOnBtns={[{ text: "Additional button"}]} />)

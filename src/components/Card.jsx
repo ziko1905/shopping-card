@@ -1,3 +1,5 @@
+import prettyPrice from "./helper-functions/prettyPrice";
+
 function Card({productObj, amountCallback, amount=0, addOnBtns=[]}) {
     const title = productObj.title
     const src = productObj.image
@@ -7,7 +9,7 @@ function Card({productObj, amountCallback, amount=0, addOnBtns=[]}) {
     ];
     addOnBtns.forEach(btn => buttons.push(btn))
 
-    return (<div data-testid="product-card">
+    return (<>
                 <h3>{title}</h3>
                 <img alt={"Image of the item"} src={src}></img>
                 {buttons.map((btn, i) => {
@@ -16,7 +18,8 @@ function Card({productObj, amountCallback, amount=0, addOnBtns=[]}) {
                     return <button {...props} key={i}>{btn.text}</button>
                 })}
                 <input onChange={(e) => amountCallback(e.target.value)} value={amount} aria-label="Input for changing amount with current amount" type="text" />
-            </div>)
+                <p aria-label="Item price">Price: {prettyPrice(productObj.price)}$</p>
+            </>)
 }
 
 export default Card
