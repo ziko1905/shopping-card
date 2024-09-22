@@ -1,18 +1,9 @@
 import { useNavigate } from "react-router-dom"
 import ShoppingCard from "../ShoppingCard.jsx"
-
+import prettyPrice from "../helper-functions/prettyPrice.js"
 
 function ShoppingCart({order, orderCallback}) {
     const navigate = useNavigate()
-
-    function prettyPrice(inputPrice) {
-        let priceStr = new String(inputPrice)
-
-        if (!priceStr.includes(".")) priceStr += "."
-        while (priceStr.length < 4 || priceStr.charAt(priceStr.length - 3) !== ".") priceStr += "0"
-
-        return priceStr
-    }
 
     function calculatePrice() {
         let price = 0
