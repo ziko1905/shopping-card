@@ -29,8 +29,9 @@ vi.mock("react-router-dom", async (importOriginal) => {
     return {
       ...mod,
       useNavigate: () => {
-        return (route, state) => {
-            mockNavigate(route, state)    
+        return (route, options) => {
+            mockNavigate(route, options)    
+            if (options) options.state.orderCallback()
         }
       },
     };
@@ -209,6 +210,14 @@ describe("Checkout button", () => {
 
         expect(mockNavigate).toHaveBeenCalled()
         expect(mockNavigate.mock.calls[0][0]).toBe("/checkout", {state: {error: "Empty order"}})
-        expect(mockNavigate.mock.calls[0][1]).toStrictEqual({state: {error: "Empty order"}})
+        expect(mockNavigate.mock.calls[0][1]).toStrictEqual({state: {error: "Empty order", orderCallback: fakeFn}})
+    })
+    it("Passes 'orderCallback' correctly", async () => {
+        const ordCallback = vi.fn()
+        const user = userEvent.setup()
+        render(<MemoryRouter><ShoppingCart orderCallback={ordCallback} order={[]} /></MemoryRouter>)
+
+        await user.click(screen.getByRole("button", {name: "Proceed To Checkout"}))
+        expect(ordCallback).toHaveBeenCalled()
     })
 })
