@@ -13,7 +13,7 @@ function ShoppingCart({order, orderCallback}) {
     }
 
     function handleCheckout() {
-        const props = ["/thank-you-page"]
+        const props = ["/checkout"]
         if (!order.length) props.push({state: {error: "Empty order"}})
 
         navigate(...props)

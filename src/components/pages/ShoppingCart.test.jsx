@@ -197,7 +197,7 @@ describe("Checkout button", () => {
         await user.click(screen.getByRole("button", {name: "Proceed To Checkout"}))
 
         expect(mockNavigate).toHaveBeenCalled()
-        expect(mockNavigate.mock.calls[0][0]).toBe("/thank-you-page")
+        expect(mockNavigate.mock.calls[0][0]).toBe("/checkout")
         expect(mockNavigate.mock.calls[0][1]).toBeUndefined()
     })
     it("Navigates to thank you page with error msg on empty order", async () => {
@@ -208,7 +208,7 @@ describe("Checkout button", () => {
         await user.click(screen.getByRole("button", {name: "Proceed To Checkout"}))
 
         expect(mockNavigate).toHaveBeenCalled()
-        expect(mockNavigate.mock.calls[0][0]).toBe("/thank-you-page", {state: {error: "Empty order"}})
+        expect(mockNavigate.mock.calls[0][0]).toBe("/checkout", {state: {error: "Empty order"}})
         expect(mockNavigate.mock.calls[0][1]).toStrictEqual({state: {error: "Empty order"}})
     })
 })
