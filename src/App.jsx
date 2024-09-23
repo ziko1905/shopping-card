@@ -1,6 +1,7 @@
 import './App.css'
 import Navbar from './components/Navbar'
-import { Outlet, Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import Homepage from './components/pages/Homepage'
 import ShoppingCart from './components/pages/ShoppingCart'
 import { useEffect, useState } from 'react'
@@ -17,9 +18,9 @@ function App() {
 
   return (
     <>
-      <Navbar />
+      <Navbar itemsNum={order.length}/>
       <Routes>
-        <Route path='/*' element={<Homepage orderCallback={setOrder} order={order} productList={productList} />} />
+        <Route path='/' element={<Homepage orderCallback={setOrder} order={order} productList={productList} />} />
         <Route path='shopping-cart' element={<ShoppingCart orderCallback={setOrder} order={order}/>} />
       </Routes>
     </>

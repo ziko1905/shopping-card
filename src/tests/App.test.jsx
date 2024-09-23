@@ -8,6 +8,7 @@ let mockProductListProp
 let mockOrderProp
 let mockProductListPropSC
 let mockOrderPropSC
+let mockNavbarCartNumber
 
 const mockProductList = await fetch('https://fakestoreapi.com/products/').then(response => response.json()).then()
 const mockOrder = ["pr1", "pr2"]
@@ -52,7 +53,22 @@ vi.mock(import("../components/pages/ShoppingCart.jsx"), () => ({
   }
 }))
 
+
+
+vi.mock(import("../components/Navbar.jsx"), () => ({
+  default: ({itemsNum}) => {
+      
+      useEffect(() => {
+        mockNavbarCartNumber(itemsNum)
+      }, [itemsNum])
+
+      return (
+        <></>
+      )
+}}))
+
 describe('App general', () => {
+  mockNavbarCartNumber = () => null
   it('Renders at homepage', () => {
     mockProductListProp = vi.fn()
     mockOrderProp = vi.fn()
@@ -67,6 +83,15 @@ describe('App general', () => {
 
     expect(() => screen.getByRole('heading', {name: "Shopping Cart"})).not.toThrow()
   })
+  it('Renders NavBar with number of ordered items', async () => {
+    mockNavbarCartNumber = vi.fn()
+    render(<MemoryRouter initialEntries={["/"]}><App /></MemoryRouter>)
+
+    expect(mockNavbarCartNumber).toHaveBeenCalled()
+
+    await waitFor(() => expect(mockNavbarCartNumber).toHaveBeenCalledTimes(2))
+    expect(mockNavbarCartNumber.mock.calls[1][0]).toBe(mockOrder.length)
+  })
   it('Passes props into routes', async () => {
     mockProductListProp = vi.fn()
     mockOrderProp = vi.fn()
@@ -78,6 +103,12 @@ describe('App general', () => {
     await waitFor(() => expect(mockProductListProp).toHaveBeenCalledTimes(2))
     expect(mockProductListProp.mock.calls[1][0]).toStrictEqual(mockProductList)
   })
+  it("Navigates to error page on fetching error", async () => {
+    render(<MemoryRouter initialEntries={["/"]}><App productListUrl='invalidUrl'/></MemoryRouter>)
+
+    await screen.findByTestId("error-page")
+  })
+
 });
 
 describe('Order managing in within App', () => {
