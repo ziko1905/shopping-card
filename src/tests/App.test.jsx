@@ -33,6 +33,16 @@ vi.mock(import("../components/pages/Homepage.jsx"), () => ({
   }
 }))
 
+vi.mock(import("../components/pages/ErrorPage.jsx"), () => ({
+  default: () => {
+      return (
+        <>
+          <div data-testid="error-page">Only supposed to load</div>
+        </>
+      )
+  }
+}))
+
 vi.mock(import("../components/pages/ShoppingCart.jsx"), () => ({
   default: ({productList, orderCallback, order}) => {
       
@@ -53,7 +63,17 @@ vi.mock(import("../components/pages/ShoppingCart.jsx"), () => ({
   }
 }))
 
+vi.mock(import("../components/pages/Checkout.jsx"), () => ({
+  default: ({error, orderCallback}) => {
+      useEffect(() => {
+        orderCallback([mockOrderProp()])
+      }, [])
 
+      return (
+        <><div data-testid="checkout-page"></div></>
+      )
+  }
+}))
 
 vi.mock(import("../components/Navbar.jsx"), () => ({
   default: ({itemsNum}) => {
@@ -108,7 +128,11 @@ describe('App general', () => {
 
     await screen.findByTestId("error-page")
   })
+  it("Routes to checkout", async () => {
+    render(<MemoryRouter initialEntries={["/checkout"]}><App productListUrl='invalidUrl'/></MemoryRouter>)
 
+    await screen.findByTestId("checkout-page")
+  })
 });
 
 describe('Order managing in within App', () => {
@@ -125,5 +149,11 @@ describe('Order managing in within App', () => {
 
     await waitFor(() => expect(mockOrderPropSC).toHaveBeenCalledTimes(2))
     expect(mockOrderPropSC.mock.calls[1][0]).toStrictEqual(mockOrder)
+  })
+  it("Set order changes order(in checkout)", () => {
+    mockOrderProp = vi.fn()
+    render(<MemoryRouter initialEntries={["/checkout"]}><App /></MemoryRouter>)
+
+    expect(mockOrderProp).toHaveBeenCalled()
   })
 })
