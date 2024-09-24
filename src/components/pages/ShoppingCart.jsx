@@ -14,7 +14,6 @@ function ShoppingCart({order, orderCallback}) {
 
     function handleCheckout() {
         const props = ["/checkout"]
-        if (!order.length) props.push({state: {error: "Empty order", orderCallback: orderCallback}})
 
         navigate(...props)
     }
