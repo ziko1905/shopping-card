@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Card from "./Card.jsx"
 import styles from "../styles/ShowcaseCard.module.css"
+import PropTypes from "prop-types"
 
 
 function ShowcaseCard({productObj, orderCallback, order}) {
@@ -28,6 +29,12 @@ function ShowcaseCard({productObj, orderCallback, order}) {
             <Card productObj={productObj} amountCallback={handleAmountChange} amount={amount} addOnBtns={[addToCartBtn]}/>
         </div>
     )
+}
+
+ShowcaseCard.propTypes = {
+    productObj: PropTypes.object.isRequired,
+    orderCallback: PropTypes.func.isRequired,
+    order: PropTypes.array
 }
 
 export default ShowcaseCard

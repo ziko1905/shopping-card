@@ -1,6 +1,7 @@
 import categoryFilter from "../helper-functions/categoryFilter"
 import ShowcaseCard from "../ShowcaseCard"
 import styles from "../../styles/Homepage.module.css"
+import PropTypes from "prop-types"
 
 function Homepage({productList=[], order, orderCallback}) {
     const productsByCategories = categoryFilter(productList)
@@ -29,6 +30,12 @@ function Homepage({productList=[], order, orderCallback}) {
             })}
         </div>
     )
+}
+
+Homepage.propTypes = {
+    productList: PropTypes.array,
+    order: PropTypes.array,
+    orderCallback: PropTypes.func
 }
 
 export default Homepage

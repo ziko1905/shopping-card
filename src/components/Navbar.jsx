@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import styles from "../styles/Navbar.module.css"
 import cartSrc from "../assets/cart-outline.svg"
+import PropTypes from "prop-types"
 
 function Navbar({itemsNum}) {
     return (
@@ -23,5 +24,14 @@ function ShoppingCartIcon({itemsNum=0}) {
         </Link>
     )
 }
+
+Navbar.propTypes = {
+    itemsNum: PropTypes.number
+}
+
+ShoppingCartIcon.propTypes = {
+    itemsNum: PropTypes.number
+}
+
 
 export default Navbar

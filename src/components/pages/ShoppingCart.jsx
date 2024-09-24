@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import ShoppingCard from "../ShoppingCard.jsx"
 import prettyPrice from "../helper-functions/prettyPrice.js"
 import styles from "../../styles/ShoppingCart.module.css"
+import PropTypes from "prop-types"
 
 function ShoppingCart({order, orderCallback}) {
     const navigate = useNavigate()
@@ -34,6 +35,11 @@ function ShoppingCart({order, orderCallback}) {
             <button className={styles["proceed-div"]} onClick={handleCheckout}>Proceed To Checkout</button>
         </div>
     )
+}
+
+ShoppingCart.propTypes = {
+    order: PropTypes.array,
+    orderCallback: PropTypes.func
 }
 
 export default ShoppingCart

@@ -1,5 +1,6 @@
 import Card from "./Card";
 import styles from "../styles/ShoppingCard.module.css"
+import PropTypes from "prop-types";
 
 function ShoppingCard({productObj, orderCallback, amount, order=[]}) {
     const removalBtn = {text: "Remove", className: styles["remove-btn"], onClick: handleRemoval}
@@ -23,6 +24,13 @@ function ShoppingCard({productObj, orderCallback, amount, order=[]}) {
             <Card productObj={productObj} amount={amount} amountCallback={handleOrderUpdate} addOnBtns={[removalBtn]}/>
         </div>
     )
+}
+
+ShoppingCard.propTypes = {
+    productObj: PropTypes.object.isRequired,
+    orderCallback: PropTypes.func.isRequired,
+    amount: PropTypes.number,
+    order: PropTypes.array
 }
 
 export default ShoppingCard
