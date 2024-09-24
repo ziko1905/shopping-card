@@ -1,7 +1,7 @@
 import Navbar from './components/Navbar'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import './styles/App.module.css'
+import './styles/App.css'
 import Homepage from './components/pages/Homepage'
 import ShoppingCart from './components/pages/ShoppingCart'
 import ErrorPage from './components/pages/ErrorPage.jsx'

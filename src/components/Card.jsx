@@ -1,5 +1,5 @@
 import prettyPrice from "./helper-functions/prettyPrice";
-import "../styles/Card.module.css"
+import "../styles/Card.css"
 import PropTypes from "prop-types";
 
 function Card({productObj, amountCallback, amount=0, addOnBtns=[]}) {
