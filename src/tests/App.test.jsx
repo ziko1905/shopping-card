@@ -67,10 +67,14 @@ vi.mock(import("../components/pages/Checkout.jsx"), () => ({
   default: ({error, orderCallback}) => {
       useEffect(() => {
         orderCallback([mockOrderProp()])
+        orderCallback([])
       }, [])
 
       return (
-        <><div data-testid="checkout-page"></div></>
+        <>
+          <div data-testid="checkout-page"></div>
+          {error && <h3>{error}</h3>}
+        </>
       )
   }
 }))
@@ -129,31 +133,36 @@ describe('App general', () => {
     await screen.findByTestId("error-page")
   })
   it("Routes to checkout", async () => {
-    render(<MemoryRouter initialEntries={["/checkout"]}><App productListUrl='invalidUrl'/></MemoryRouter>)
+    render(<MemoryRouter initialEntries={["/checkout"]}><App /></MemoryRouter>)
 
     await screen.findByTestId("checkout-page")
   })
 });
 
 describe('Order managing in within App', () => {
-  it("Set order changes order", async () => {
+  it("setOrder changes order", async () => {
     mockOrderProp = vi.fn()
     render(<MemoryRouter initialEntries={["/"]}><App /></MemoryRouter>)
 
     await waitFor(() => expect(mockOrderProp).toHaveBeenCalledTimes(2))
     expect(mockOrderProp.mock.calls[1][0]).toStrictEqual(mockOrder)
   })
-  it("Set order changes order(in shopping cart)", async () => {
+  it("setOrder changes order(in shopping cart)", async () => {
     mockOrderPropSC = vi.fn()
     render(<MemoryRouter initialEntries={["/shopping-cart"]}><App /></MemoryRouter>)
 
     await waitFor(() => expect(mockOrderPropSC).toHaveBeenCalledTimes(2))
     expect(mockOrderPropSC.mock.calls[1][0]).toStrictEqual(mockOrder)
   })
-  it("Set order changes order(in checkout)", () => {
+  it("setOrder changes order(in checkout)", () => {
     mockOrderProp = vi.fn()
     render(<MemoryRouter initialEntries={["/checkout"]}><App /></MemoryRouter>)
 
     expect(mockOrderProp).toHaveBeenCalled()
+  })
+  it("Loads checkout with error msg on empty order", () => {
+    render(<MemoryRouter initialEntries={["/checkout"]}><App /></MemoryRouter>)
+
+    expect(() => screen.getByRole("heading", {name: "Error: Can't checkout on empty order."})).not.toThrow()
   })
 })

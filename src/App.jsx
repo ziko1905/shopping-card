@@ -13,6 +13,7 @@ function App({productListUrl='https://fakestoreapi.com/products/'}) {
   const [order, setOrder] = useState([])
   const [productList, setProductList] = useState([])
   const navigate = useNavigate()
+  const checkoutError = getCheckoutError()
 
   useEffect(() => {
     fetch(productListUrl).then(response => response.json())
@@ -21,7 +22,11 @@ function App({productListUrl='https://fakestoreapi.com/products/'}) {
       navigate("/error-page")
     })
   }, [])
-  
+
+  function getCheckoutError() {
+    const error = checkoutErrorList.find(err => err.check(order))
+    return error ? error.getError() : null
+  }
 
   return (
     <>
@@ -30,10 +35,24 @@ function App({productListUrl='https://fakestoreapi.com/products/'}) {
         <Route path='/' element={<Homepage orderCallback={setOrder} order={order}  productList={productList} />} /> 
         <Route path='shopping-cart' element={<ShoppingCart orderCallback={setOrder} order={order}/>} />
         <Route path='*' element={<ErrorPage />} />
-        <Route path='checkout' element={<Checkout orderCallback={setOrder}/>} />
+        <Route path='checkout' element={<Checkout orderCallback={setOrder} error={checkoutError}/>} />
       </Routes>
     </>
   )
 }
+
+class EmptyOrderCheckoutError {
+  static check(order) {
+    if (!order.length) return true
+    return false
+  }
+  static getError() {
+    return "Error: Can't checkout on empty order."
+  }
+}
+
+const checkoutErrorList = [
+  EmptyOrderCheckoutError,
+]
 
 export default App
