@@ -181,14 +181,14 @@ describe("Price managing", () => {
 
         const correctPrice = calcPrice(order)
 
-        expect(screen.getByLabelText("Order price").textContent).toBe(`Price: ${correctPrice}$`)
+        expect(screen.getByLabelText("Order price").textContent).toBe(`Order total: ${correctPrice}$`)
     })
     it("Zero on empty order", () => {
         render(<MemoryRouter>
             <ShoppingCart orderCallback={fakeFn} order={[]} />
         </MemoryRouter>)
 
-        expect(screen.getByLabelText("Order price").textContent).toBe(`Price: 0.00$`)
+        expect(screen.getByLabelText("Order price").textContent).toBe(`Order total: 0.00$`)
     })
     it("Checks double decimal format on items that does not have it", async () => {
         // Specific item with price property of strictly equal 114
@@ -197,7 +197,7 @@ describe("Price managing", () => {
             <ShoppingCart orderCallback={fakeFn} order={[{productId: item.id, productObj:item, amount: 1}]} />
         </MemoryRouter>)
 
-        expect(screen.getByLabelText("Order price").textContent).toBe(`Price: 114.00$`)
+        expect(screen.getByLabelText("Order price").textContent).toBe(`Order total: 114.00$`)
     })
 })
 

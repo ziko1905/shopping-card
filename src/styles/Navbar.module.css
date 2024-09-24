@@ -5,6 +5,7 @@
   gap: 2rem;
 
   position: sticky;
+  z-index: 1;
   top: 0;
   height: 8vh;
   padding: 0 8rem;

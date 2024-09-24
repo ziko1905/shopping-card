@@ -9,11 +9,11 @@ function Card({productObj, amountCallback, amount=0, addOnBtns=[]}) {
 
     return (<>
                 <h3>{title}</h3>
-                <img alt={"Image of the item"} src={src}></img>
+                <img className="product-image" alt={"Image of the item"} src={src}></img>
                 <div className="amount-div">
-                    <button onClick={() => amountCallback(amount + 1)} aria-label="Increment amount by one">+</button>
-                    <input onChange={(e) => amountCallback(e.target.value)} value={amount} aria-label="Input for changing amount with current amount" type="text" />
                     <button onClick={() => amountCallback(amount - 1)} aria-label="Decrement amount by one">-</button>
+                    <input onChange={(e) => amountCallback(e.target.value)} value={amount} aria-label="Input for changing amount with current amount" type="text" />
+                    <button onClick={() => amountCallback(amount + 1)} aria-label="Increment amount by one">+</button>
                 </div>
                 {buttons.map((btn, i) => {
                     const props = {...btn}

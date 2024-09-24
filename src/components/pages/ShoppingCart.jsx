@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import ShoppingCard from "../ShoppingCard.jsx"
 import prettyPrice from "../helper-functions/prettyPrice.js"
+import styles from "../../styles/ShoppingCart.module.css"
 
 function ShoppingCart({order, orderCallback}) {
     const navigate = useNavigate()
@@ -21,16 +22,16 @@ function ShoppingCart({order, orderCallback}) {
     return (
         <div className="content">
             <h1>Shopping Cart</h1>
-            <div>
+            <div className={styles["cart-div"]}>
                 {!!order.length && order.map(card => {
                     return <ShoppingCard orderCallback={orderCallback} key={card.productObj.id} amount={card.amount} productObj={card.productObj} order={order} />
                 })}
-                {!order.length && <h3>Shopping cart is empty</h3>}
+                {!order.length && <h3 className={styles["cart-msg"]}>Shopping cart is empty</h3>}
             </div>
             <div>
-                <p aria-label="Order price">Price: {calculatePrice()}$</p>
+                <p className={styles.price} aria-label="Order price">Order total: {calculatePrice()}$</p>
             </div>
-            <button onClick={handleCheckout}>Proceed To Checkout</button>
+            <button className={styles["proceed-div"]} onClick={handleCheckout}>Proceed To Checkout</button>
         </div>
     )
 }

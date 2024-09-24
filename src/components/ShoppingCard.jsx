@@ -1,8 +1,8 @@
 import Card from "./Card";
-
+import styles from "../styles/ShoppingCard.module.css"
 
 function ShoppingCard({productObj, orderCallback, amount, order=[]}) {
-    const removalBtn = {text: "Remove", className: "remove-btn", onClick: handleRemoval}
+    const removalBtn = {text: "Remove", className: styles["remove-btn"], onClick: handleRemoval}
 
     function handleOrderUpdate(newAmount) {
         if (newAmount > 0) {
@@ -19,7 +19,9 @@ function ShoppingCard({productObj, orderCallback, amount, order=[]}) {
     }
 
     return (
-        <Card productObj={productObj} amount={amount} amountCallback={handleOrderUpdate} addOnBtns={[removalBtn]}/>
+        <div className={styles.card}>
+            <Card productObj={productObj} amount={amount} amountCallback={handleOrderUpdate} addOnBtns={[removalBtn]}/>
+        </div>
     )
 }
 
