@@ -33,4 +33,11 @@ ShoppingCard.propTypes = {
     order: PropTypes.array
 }
 
+ShoppingCard.propTypes = {
+    productObj: PropTypes.object.isRequired,
+    orderCallback: PropTypes.func.isRequired,
+    amount: PropTypes.string || PropTypes.number,
+    order: PropTypes.array
+}
+
 export default ShoppingCard
