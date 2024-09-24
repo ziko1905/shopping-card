@@ -9,7 +9,7 @@ function ShoppingCard({productObj, orderCallback, amount, order=[]}) {
             order.forEach(obj => {
             if (obj.productId === productObj.id) obj.amount = +newAmount
         })}
-        orderCallback(order)
+        orderCallback([...order])
     }
 
     function handleRemoval() {
