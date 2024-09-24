@@ -1,9 +1,11 @@
 import { useState } from "react"
 import Card from "./Card.jsx"
+import styles from "../styles/ShowcaseCard.module.css"
+
 
 function ShowcaseCard({productObj, orderCallback, order}) {
     const [amount, setAmount] = useState(1)
-    const addToCartBtn = { text: "Add To Cart", onClick: () => handleOrderUpdate({ productObj, productId: productObj.id, amount: amount}) }
+    const addToCartBtn = { text: "Add To Cart", onClick: () => handleOrderUpdate({ productObj, productId: productObj.id, amount: amount}), className: styles["add-to-cart"]}
 
     function handleAmountChange(newAmount) {
         if (newAmount < 1 || isNaN(+newAmount)) return
@@ -22,7 +24,9 @@ function ShowcaseCard({productObj, orderCallback, order}) {
     }
 
     return (
-        <Card productObj={productObj} amountCallback={handleAmountChange} amount={amount} addOnBtns={[addToCartBtn]}/>
+        <div className={styles.card}>
+            <Card productObj={productObj} amountCallback={handleAmountChange} amount={amount} addOnBtns={[addToCartBtn]}/>
+        </div>
     )
 }
 
