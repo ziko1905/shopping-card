@@ -14,7 +14,7 @@ function Homepage({productList=[], order, orderCallback}) {
         return s.join(" ")
     }
     return (
-        <>
+        <div className="content">
             <h1>Homepage</h1>
             {categoriesList.map(category => {
                 return (
@@ -26,7 +26,7 @@ function Homepage({productList=[], order, orderCallback}) {
                     </div>
             )
             })}
-        </>
+        </div>
     )
 }
 

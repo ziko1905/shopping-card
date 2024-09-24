@@ -19,7 +19,7 @@ function ShoppingCart({order, orderCallback}) {
     }
 
     return (
-        <>
+        <div className="content">
             <h1>Shopping Cart</h1>
             <div>
                 {!!order.length && order.map(card => {
@@ -31,7 +31,7 @@ function ShoppingCart({order, orderCallback}) {
                 <p aria-label="Order price">Price: {calculatePrice()}$</p>
             </div>
             <button onClick={handleCheckout}>Proceed To Checkout</button>
-        </>
+        </div>
     )
 }
 
