@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import styles from "../../styles/Checkout.module.css"
+import PropTypes from "prop-types"
 
 function Checkout({error, orderCallback}) {
     const [errorMsg, setErrorMsg] = useState("")
@@ -15,6 +16,11 @@ function Checkout({error, orderCallback}) {
                 }</h3>
         </div>
     )
+}
+
+Checkout.propTypes = {
+    error: PropTypes.string,
+    orderCallback: PropTypes.func
 }
 
 export default Checkout

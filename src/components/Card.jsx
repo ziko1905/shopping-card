@@ -1,5 +1,6 @@
 import prettyPrice from "./helper-functions/prettyPrice";
-import styles from "../styles/Card.module.css"
+import "../styles/Card.module.css"
+import PropTypes from "prop-types";
 
 function Card({productObj, amountCallback, amount=0, addOnBtns=[]}) {
     const title = productObj.title
@@ -22,6 +23,14 @@ function Card({productObj, amountCallback, amount=0, addOnBtns=[]}) {
                 })}
                 <p aria-label="Item price">Price: {prettyPrice(productObj.price)}$</p>
             </>)
+}
+
+Card.propTypes = {
+    productObj: PropTypes.object.isRequired,
+    amountCallback: PropTypes.func.isRequired,
+    amount: PropTypes.string || PropTypes.number,
+    addOnBtns: PropTypes.array,
+    text: PropTypes.string
 }
 
 export default Card
