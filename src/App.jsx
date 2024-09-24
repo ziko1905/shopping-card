@@ -16,7 +16,13 @@ function App({productListUrl='https://fakestoreapi.com/products/'}) {
   const checkoutError = getCheckoutError()
 
   useEffect(() => {
-    fetch(productListUrl).then(response => response.json())
+    fetch(productListUrl).then(response => {
+      if (response.status >= 400) {
+        navigate("/error-page")
+      }
+
+      return response.json()
+    })
     .then(response => setProductList(response))
     .catch(() => {
       navigate("/error-page")

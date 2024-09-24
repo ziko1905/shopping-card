@@ -137,6 +137,11 @@ describe('App general', () => {
 
     await screen.findByTestId("checkout-page")
   })
+  it("Routes to error page on invalid url", () => {
+    render(<MemoryRouter initialEntries={["/invalid"]}><App /></MemoryRouter>)
+
+    expect(() => screen.getByTestId("error-page")).not.toThrow()
+  })
 });
 
 describe('Order managing in within App', () => {
